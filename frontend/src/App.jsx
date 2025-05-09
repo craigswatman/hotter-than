@@ -69,19 +69,28 @@ function App() {
     setHeadline(null)
 
     try {
-      const position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject)
-      })
+      // Default coordinates for Chester, UK
+      const defaultCoords = { lat: 53.1934, lon: -2.8931 };
+      
+      let coords;
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject)
+        })
+        coords = { lat: position.coords.latitude, lon: position.coords.longitude }
+      } catch (geoError) {
+        console.log('Location permission denied, defaulting to Chester:', geoError)
+        coords = defaultCoords
+      }
 
-      const { latitude, longitude } = position.coords
-      setLocation({ lat: latitude, lon: longitude })
+      setLocation(coords)
 
       const response = await fetch(`${API_URL}/api/hotter-than`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ lat: latitude, lon: longitude }),
+        body: JSON.stringify(coords),
       })
 
       if (!response.ok) {
