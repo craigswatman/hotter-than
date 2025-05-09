@@ -103,18 +103,19 @@ function HotterThanList({ userHigh, hotterThan, locationName, headline, onRegene
                         position: 'absolute',
                         top: '-8px',
                         right: '-8px',
-                        background: '#4CAF50',
-                        color: 'white',
+                        background: '#f0fff0',
+                        color: '#333',
                         borderRadius: '50%',
-                        width: '20px',
-                        height: '20px',
+                        width: '24px',
+                        height: '24px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '12px',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                        fontSize: '16px',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                        border: '1px solid #4CAF50'
                       }}>
-                        ✓
+                        🌞
                       </div>
                     )}
                   </div>

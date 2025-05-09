@@ -30,25 +30,35 @@ function App() {
       `Crikey! ${locationName} Set to Sizzle Past {place}!`,
       `Strewth! ${locationName} to Toast {place} in Heat Battle!`,
       `Blimey O'Riley! ${locationName} to Outshine {place}!`,
-      `Cor Blimey! ${locationName} Set to Fry {place} in Heat Clash!`
+      `Cor Blimey! ${locationName} Set to Fry {place} in Heat Clash!`,
+      `Get the beers in Sarge! ${locationName} Set to be hotter than {place}!`,
+      `Get the beers in Sarge! ${locationName} Set to be hotter than {place}!`,
+      `Get the beers in Sarge! ${locationName} Set to be hotter than {place}!`,
     ];
 
-    // Get the place with the biggest temperature difference
-    const hottestPlace = hotterThan.reduce((max, place) => {
-      const maxDiff = Math.max(...place.nextDays.map(day => day.userHigh - day.placeHigh));
-      return maxDiff > max.diff ? { place, diff: maxDiff } : max;
-    }, { place: null, diff: -Infinity }).place;
-
-    if (!hottestPlace) return null;
-
+    // Randomly select a place from the hotter-than list
+    const randomPlace = hotterThan[Math.floor(Math.random() * hotterThan.length)];
+    
     // Get a random headline template
     const template = headlines[Math.floor(Math.random() * headlines.length)];
-    return template.replace('{place}', hottestPlace.name);
+    return template.replace('{place}', randomPlace.name);
   };
 
   const handleRegenerateHeadline = () => {
     if (!results?.hotterThan || !results?.locationName) return;
+    
+    // Generate a new headline with the same data
     const newHeadline = generateHeadline(results.locationName, results.hotterThan);
+    
+    // Keep generating until we get a different headline
+    while (newHeadline === headline) {
+      const anotherHeadline = generateHeadline(results.locationName, results.hotterThan);
+      if (anotherHeadline !== headline) {
+        setHeadline(anotherHeadline);
+        return;
+      }
+    }
+    
     setHeadline(newHeadline);
   };
 

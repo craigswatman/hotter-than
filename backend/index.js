@@ -144,6 +144,19 @@ app.post('/api/hotter-than', async (req, res) => {
 
         // Include if user is hotter on any day and place's average is higher than user's average
         if (comparisons.some(comp => comp.isHotter) && place.avgHigh > userAvgHigh) {
+          console.log(`Found hotter comparison for ${place.name}:`);
+          console.log('Today:', {
+            place: placeTemps.today,
+            user: userTemps.today,
+            diff: userTemps.today - placeTemps.today
+          });
+          console.log('Next days:', comparisons.map(day => ({
+            date: day.date,
+            place: day.placeHigh,
+            user: day.userHigh,
+            diff: day.userHigh - day.placeHigh
+          })));
+          
           return {
             name: place.name,
             today: {
